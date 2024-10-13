@@ -1,0 +1,57 @@
+<div class="page-container">
+  <div class="masonry-container">
+    <div class="masonry-item" *ngFor="let artwork of artworks">
+      <p-card header="{{ artwork.username }}" subheader="Posted on {{ artwork.postedDate | date:'short' }}" [style]="{ width: '360px', position: 'relative'  }"
+      (mouseenter)="showOverlays(artwork.id, $event)"
+      (mouseleave)="hideOverlays()">
+        
+        <div class="card flex align-items-center gap-2 flex-wrap">
+          <p-chip *ngFor="let label of artwork.labels" [label]="label"></p-chip>
+        </div>
+        
+        <ng-template pTemplate="content">
+          <div *ngFor="let imageUrl of artwork.imageUrls">
+            <p-image [alt]="'Image ' + imageUrl" [src]="imageUrl" [preview]="true" [imageStyle]="{ 'width': '100%', 'height': 'auto', 'object-fit': 'cover' }"></p-image>
+          </div>
+        </ng-template>
+        
+        <p>{{ artwork.description }}</p>
+        
+        <ng-template pTemplate="footer">
+          <div class="flex align-items-center mt-1 footer-container">
+            <div class="flex align-items-center icon-container" style="flex-grow: 0;">
+              <i class="pi" 
+                [ngClass]="{'pi-heart-fill': isLiked[artwork.id], 'pi-heart': !isLiked[artwork.id]}"
+                (click)="toggleLike(artwork.id)" 
+                [style.color]="isLiked[artwork.id] ? '#c62621' : 'inherit'"
+                style="font-size: 1rem; margin-right: 0.5rem;">
+                <span class="icon-text" (mouseenter)="displayLikes($event, artwork.id)">{{ artwork.likeCount }}</span>
+              </i>
+              <i class="pi pi-comments" style="font-size: 1rem; margin-right: 0.5rem;">
+                <span class="icon-text" (mouseenter)="displayComments($event, artwork.id)">{{ artwork.commentCount }}</span>
+              </i>
+            </div>
+            <form [formGroup]="commentForms[artwork.id]" (ngSubmit)="submitComment(artwork.id)">
+              <input type="text" pInputText formControlName="comment" placeholder="Add a comment..." class="comment-input" />
+            </form>
+          </div>
+        </ng-template>
+      </p-card>
+    </div>
+  </div>
+</div>
+
+<!-- Overlay Panels for Likes and Comments -->
+<p-overlayPanel #opLikes>
+  <app-likes-comments-overlay 
+    [likes]="likes" 
+    [isLikes]="true">
+  </app-likes-comments-overlay>
+</p-overlayPanel>
+
+<p-overlayPanel #opComments>
+  <app-likes-comments-overlay 
+    [comments]="comments" 
+    [isLikes]="false">
+  </app-likes-comments-overlay>
+</p-overlayPanel>

@@ -1,0 +1,142 @@
+<div class="surface-section">
+    <div class="font-medium text-3xl text-900 mb-3">Profile Information</div>
+    <div class="text-500 mb-5">Here you can edit your profile details.</div>
+    <ul class="list-none p-0 m-0">
+        <li class="flex align-items-center py-3 px-2 border-top-1 surface-border flex-wrap">
+            <div class="text-500 w-6 md:w-2 font-medium">Profile Picture</div>
+            <app-upload-pfp [profilePictureUrl]="profilePictureUrl"></app-upload-pfp>
+        </li>
+        <!-- Username -->
+        <li class="flex align-items-center py-3 px-2 border-top-1 surface-border flex-wrap">
+            <div class="text-500 w-6 md:w-2 font-medium">Username</div>
+            <div class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">
+                <ng-container *ngIf="!isEditingUsername; else editUsername">
+                    {{username}}
+                </ng-container>
+                <ng-template #editUsername>
+                    <input pInputText [(ngModel)]="username" (keyup.enter)="saveUsername()" />
+                </ng-template>
+            </div>
+            <div class="w-6 md:w-2 flex justify-content-end">
+                <p-button pRipple [label]="isEditingUsername ? 'Save' : 'Edit'"
+                    [icon]="isEditingUsername ? 'pi pi-save' : 'pi pi-pencil'" class="p-button-text"
+                    (onClick)="toggleEditUsername()">
+                </p-button>
+            </div>
+        </li>
+
+        <!-- Subscribed Labels -->
+        <li class="flex align-items-center py-3 px-2 border-top-1 surface-border flex-wrap">
+            <div class="text-500 w-6 md:w-2 font-medium">Subscribed Labels</div>
+            <div class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">
+                <ng-container *ngIf="!isEditingLabels; else editLabels">
+                    <div class="card flex align-items-center gap-2 flex-wrap">
+                        <p-chip *ngFor="let label of staticLabels" [label]="label" [removable]="false" />
+                    </div>
+                </ng-container>
+                <ng-template #editLabels>
+                    <p-chips [(ngModel)]="editableLabels" [max]="max" (onAdd)="addLabel($event.value)"
+                        (onRemove)="removeLabel($event.value)" />
+                </ng-template>
+            </div>
+            <div class="w-6 md:w-2 flex justify-content-end">
+                <p-button pRipple [label]="isEditingLabels ? 'Save' : 'Edit'"
+                    [icon]="isEditingLabels ? 'pi pi-save' : 'pi pi-pencil'" class="p-button-text"
+                    (onClick)="toggleEditLabels()"> <!-- Ensure this line is correct -->
+                </p-button>
+            </div>
+        </li>
+
+
+        <!-- Email -->
+        <li class="flex align-items-center py-3 px-2 border-top-1 surface-border flex-wrap">
+            <div class="text-500 w-6 md:w-2 font-medium">Email</div>
+            <div class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">
+                <ng-container *ngIf="!isEditingEmail; else editEmail">
+                    {{email}}
+                </ng-container>
+                <ng-template #editEmail>
+                    <input pInputText [(ngModel)]="email" (keyup.enter)="saveEmail()" />
+                </ng-template>
+            </div>
+            <div class="w-6 md:w-2 flex justify-content-end">
+                <p-button pRipple [label]="isEditingEmail ? 'Save' : 'Edit'"
+                    [icon]="isEditingEmail ? 'pi pi-save' : 'pi pi-pencil'" class="p-button-text"
+                    (onClick)="toggleEditEmail()">
+                </p-button>
+            </div>
+        </li>
+
+        <!-- Password -->
+        <li class="flex align-items-center py-3 px-2 border-top-1 surface-border flex-wrap">
+            <div class="text-500 w-6 md:w-2 font-medium">Password</div>
+            <div class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1">**********</div>
+            <div class="w-6 md:w-2 flex justify-content-end">
+                <p-button pRipple label="Edit" icon="pi pi-pencil" class="p-button-text"
+                    (onClick)="showDialog()"></p-button>
+            </div>
+        </li>
+
+        <!-- Bio -->
+        <li class="flex align-items-center py-3 px-2 border-top-1 border-bottom-1 surface-border flex-wrap">
+            <div class="text-500 w-6 md:w-2 font-medium">Bio</div>
+            <div class="text-900 w-full md:w-8 md:flex-order-0 flex-order-1 line-height-3">
+                <ng-container *ngIf="!isEditingBio; else editBio">
+                    {{bio}}
+                </ng-container>
+                <ng-template #editBio>
+                    <textarea pInputTextarea [(ngModel)]="bio" class="flex-auto" (keyup.enter)="saveBio()"
+                        [style]="{ width: '82%' }"></textarea>
+                </ng-template>
+            </div>
+            <div class="w-6 md:w-2 flex justify-content-end">
+                <p-button pRipple [label]="isEditingBio ? 'Save' : 'Edit'"
+                    [icon]="isEditingBio ? 'pi pi-save' : 'pi pi-pencil'" class="p-button-text"
+                    (onClick)="toggleEditBio()">
+                </p-button>
+            </div>
+        </li>
+    </ul>
+</div>
+
+
+<p-dialog header="Edit Profile" [modal]="true" [(visible)]="visible" [style]="{ width: '27rem'}">
+    <span class="p-text-secondary block mb-5">Update your information.</span>
+    <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+      <div class="flex align-items-center gap-3 mb-3">
+          <label for="current" class="font-semibold w-6rem">Current Password</label>
+          <input pInputText id="current" formControlName="currentPassword" class="flex-auto" type="password" autocomplete="off" />
+          <p *ngIf="profileForm.get('currentPassword')?.invalid && profileForm.get('currentPassword')?.touched" class="text-red-500">Current password is required.</p>
+      </div>
+      <div class="flex align-items-center gap-3 mb-3">
+          <label for="new" class="font-semibold w-6rem">New Password</label>
+          <p-password formControlName="newPassword">
+              <ng-template pTemplate="header">
+                  <h6>Pick a password</h6>
+              </ng-template>
+              <ng-template pTemplate="footer">
+                  <p-divider />
+                  <p class="mt-2">Suggestions</p>
+                  <ul class="pl-2 ml-2 mt-0" style="line-height: 1.5">
+                      <li>At least one lowercase</li>
+                      <li>At least one uppercase</li>
+                      <li>At least one numeric</li>
+                      <li>Minimum 8 characters</li>
+                  </ul>
+              </ng-template>
+          </p-password>
+          <p *ngIf="profileForm.get('newPassword')?.invalid && profileForm.get('newPassword')?.touched" class="text-red-500">New password is required and must be at least 8 characters long.</p>
+      </div>
+      <div class="flex align-items-center gap-3 mb-5">
+          <label for="confirm" class="font-semibold w-6rem">Confirm Password</label>
+          <input pInputText id="confirm" formControlName="confirmPassword" class="flex-auto" type="password" autocomplete="off" />
+          <p *ngIf="profileForm.errors?.['mismatch'] && (profileForm.get('confirmPassword')?.touched || profileForm.get('newPassword')?.touched)" class="text-red-500">Passwords do not match.</p>
+      </div>
+      <div class="flex justify-content-end gap-2">
+          <p-button label="Cancel" severity="secondary" (onClick)="visible = false" />
+          <p-button label="Save" icon="pi pi-save" type="submit" />
+      </div>
+    </form>
+</p-dialog>
+
+

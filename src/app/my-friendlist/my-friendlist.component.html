@@ -1,0 +1,56 @@
+<app-menu (userIdFetched)="onUserIdFetched($event)"></app-menu>
+
+<div class="surface-section px-4 py-5 md:px-6 lg:px-8">
+    <!-- Breadcrumb navigation -->
+    <ul class="list-none p-0 m-0 flex align-items-center font-medium mb-3">
+        <li>
+            <a class="text-500 no-underline line-height-3 cursor-pointer">My Circle</a>
+        </li>
+        <li class="px-2">
+            <i class="pi pi-angle-right text-500 line-height-3"></i>
+        </li>
+        <li>
+            <span class="text-900 line-height-3">My Friendlist</span>
+        </li>
+    </ul>
+
+    <div class="friend-list">
+        <ng-container *ngFor="let friend of friends; let last = last">
+            <div class="friend-item">
+                <div class="flex align-items-start flex-column lg:justify-content-between lg:flex-row">
+                    <div>
+                        <div class="card flex justify-content-left">
+                            <!-- Avatar section -->
+                            <p-avatar 
+                                *ngIf="friend.profilePicture" 
+                                [image]="friend.profilePicture" 
+                                size="large" 
+                                shape="circle" 
+                                class="avatar">
+                            </p-avatar>
+                            <p-avatar 
+                                *ngIf="!friend.profilePicture" 
+                                size="large" 
+                                shape="circle" 
+                                icon="pi pi-user" 
+                                class="avatar">
+                            </p-avatar>
+                            <div class="font-medium text-3xl text-900 username">&#64;{{friend.username }}</div>
+                        </div>
+                        <div class="flex align-items-center text-700 flex-wrap">
+                            <div class="mr-5 flex align-items-center mt-3">
+                                <i class="pi pi-users mr-2"></i>
+                                <span>{{ friend.noOfCircleFriends === 1 ? '1 Circle Friend' : (friend.noOfCircleFriends || 0) + ' Circle Friends' }}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-3 lg:mt-0">
+                        <p-button pRipple label="Remove from Circle" class="p-button-outlined mr-2" icon="pi pi-times" severity="secondary" [outlined]="true" (click)="removeFriend(friend.friendId)"></p-button>
+                    </div>
+                </div>
+            </div>
+            <p-divider *ngIf="!last"></p-divider>
+        </ng-container>
+    </div>
+</div>
+

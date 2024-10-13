@@ -1,0 +1,44 @@
+.notification-item-unread {
+    background-color: #f0f0f0; /* Light gray for unread notifications */
+    font-weight: bold;
+    padding: 3px 15px; /* 10px top and bottom, 15px left and right */
+    border-radius: 8px; /* Optional: Add rounded corners */
+    margin-bottom: 10px; /* Optional: Add margin between items */
+    cursor: pointer;
+}
+
+.notification-item-read {
+    background-color: #ffffff; /* White for read notifications */
+    padding: 3px 15px; /* 10px top and bottom, 15px left and right */
+    border-radius: 8px; /* Optional: Add rounded corners */
+    cursor: pointer;
+}
+
+.notification-content {
+    padding: 0 15px; /* Add horizontal padding to the content */
+    display: flex; /* Use flexbox to align content */
+    flex-direction: column; /* Align items in a column */
+}
+
+.notification-action {
+    display: flex;
+    flex-direction: row; /* Ensure username and action are in the same line */
+    align-items: center; /* Align items vertically in the center */
+}
+
+.notification-username {
+    font-weight: bold; /* Make username bold */
+    color: #000000; /* Make username black */
+    margin-right: 5px; /* Add space between username and action */
+}
+
+.notification-time {
+    color: #666666; /* Change color for timeAgo */
+}
+
+.post-preview img {
+    width: 75px; /* Set a fixed width for post preview images */
+    height: 75px; /* Set a fixed height for post preview images */
+    object-fit: cover; /* Ensure the image does not stretch and maintains aspect ratio */
+    border-radius: 5px; /* Optional: Add rounded corners to the image */
+}

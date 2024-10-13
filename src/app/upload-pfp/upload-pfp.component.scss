@@ -1,0 +1,52 @@
+
+  .avatar-container {
+    position: relative;
+    display: inline-block;
+ // Space between avatar and upload section
+  }
+  
+
+.avatar-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5); // semi-transparent overlay
+    border-radius: 50%; // make it circular
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+
+    &:hover {
+        opacity: 1;
+    }
+
+    .pi-plus {
+        color: white;
+        font-size: 1.5rem; // adjust size as needed
+    }
+}
+  
+  .upload-section {
+    width: 100%; // Make it full width of the card
+    max-width: 100%; // Adjust this value as needed
+    margin-top: 10px; // Adjust spacing as needed
+  }
+  
+  // If you want to center the content inside the upload section as well
+  :host ::ng-deep .p-fileupload {
+    display: flex;
+    flex-direction: column;
+    
+  }
+  :host ::ng-deep .p-avatar {
+    .p-avatar-icon {
+      font-size: 2rem; // Adjust this value as needed
+    }
+  
+   
+  }

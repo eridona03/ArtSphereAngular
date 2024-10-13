@@ -1,0 +1,18 @@
+.username {
+    margin-left: 10px; /* Adjust the value to your desired spacing */
+}
+
+
+.friend-list {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .friend-item {
+    width: 100%;
+  }
+  
+  :host ::ng-deep .p-divider.p-divider-horizontal {
+    margin: 1rem 0;
+    padding: 0;
+  }

@@ -1,0 +1,16 @@
+.username {
+    margin-left: 10px; /* Adjust the value to your desired spacing */
+}
+.request-list {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .request-item {
+    width: 100%;
+  }
+  
+  :host ::ng-deep .p-divider.p-divider-horizontal {
+    margin: 1rem 0;
+    padding: 0;
+  }

@@ -1,0 +1,24 @@
+:host ::ng-deep {
+    .p-fileupload {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100% !important;
+      padding: 16px 0 !important; 
+    }
+  
+    .p-fileupload .p-fileupload-buttonbar {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+    }
+
+    .p-fileupload-content{
+        width: 100%;
+    }
+  
+    .p-fileupload .p-fileupload-buttonbar .p-button {
+      margin: 0 5px;
+    }
+}

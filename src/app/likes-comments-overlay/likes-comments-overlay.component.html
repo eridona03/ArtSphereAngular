@@ -1,0 +1,45 @@
+<div class="flex flex-column gap-3 w-25rem">
+  <ng-container *ngIf="isLikes; else commentsSection">
+    <!-- Likes Section -->
+    <ng-container *ngIf="likes.length > 0; else noResults">
+      <ul class="list-none p-0 m-0 flex flex-column gap-3">
+        <li *ngFor="let like of likes" class="flex align-items-center gap-2">
+          <p-avatar *ngIf="like.profilePhotoUrl" [image]="like.profilePhotoUrl" size="large" shape="circle" class="avatar"></p-avatar>
+          <p-avatar *ngIf="!like.profilePhotoUrl" icon="pi pi-user" size="large" shape="circle" class="avatar"></p-avatar>
+          <div>
+            <span class="font-medium">{{ like.username }}</span>
+          </div>
+        </li>
+      </ul>
+    </ng-container>
+    <ng-template #noResults>
+      <div class="no-results">
+        <span>No likes found.</span>
+      </div>
+    </ng-template>
+  </ng-container>
+  
+  <ng-template #commentsSection>
+    <!-- Comments Section -->
+    <ng-container *ngIf="comments.length > 0; else noComments">
+      <ul class="list-none p-0 m-0 flex flex-column gap-3">
+        <li *ngFor="let comment of comments" class="flex align-items-center gap-2">
+          <p-avatar *ngIf="comment.profilePhotoUrl" [image]="comment.profilePhotoUrl" size="large" shape="circle" class="avatar"></p-avatar>
+          <p-avatar *ngIf="!comment.profilePhotoUrl" icon="pi pi-user" size="large" shape="circle" class="avatar"></p-avatar>
+          <div class="comment-content-container">
+            <div class="comment-content">
+              <span class="font-medium">{{ comment.username }}</span>
+              <span>{{ comment.content }}</span>
+            </div>
+            <small class="time-ago">{{ comment.timeAgo }}</small>
+          </div>
+        </li>
+      </ul>
+    </ng-container>
+    <ng-template #noComments>
+      <div class="no-results">
+        <span>No comments found.</span>
+      </div>
+    </ng-template>
+  </ng-template>
+</div>

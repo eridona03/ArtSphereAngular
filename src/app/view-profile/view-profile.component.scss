@@ -1,0 +1,19 @@
+.example-container {
+    width: auto;
+    height: 100%;
+
+}
+
+:host {
+    ::ng-deep mat-drawer-content {
+        background-color: white;
+    }
+}
+
+mat-drawer {
+    padding: 2%;
+}
+
+img:hover {
+    cursor: pointer;
+}

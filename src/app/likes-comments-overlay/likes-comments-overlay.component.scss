@@ -1,0 +1,20 @@
+.comment-content-container {
+    display: flex;
+    justify-content: space-between; /* Distributes space between items */
+    align-items: flex-start; /* Align items at the start */
+    margin-bottom: 0.5rem; /* Adjust as needed for spacing */
+}
+
+.comment-content {
+    display: flex;
+    align-items: center; /* Align items vertically */
+    gap: 0.5rem; /* Adjust spacing as needed */
+    flex: 1; /* Allow content to grow and take available space */
+}
+
+.time-ago {
+    font-size: 0.875rem; /* Adjust font size as needed */
+    color: #888; /* Adjust color as needed */
+    align-self: center; /* Align vertically center */
+    margin-left: 0.5rem; /* Adjust as needed for spacing */
+}

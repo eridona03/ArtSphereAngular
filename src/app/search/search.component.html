@@ -1,0 +1,81 @@
+<input type="text" pInputText placeholder="Search user or artwork" class="w-8rem sm:w-auto"
+    (input)="onSearch($event)" />
+
+<p-overlayPanel #op>
+    <div class="flex flex-column gap-3 w-25rem">
+
+        <div [formGroup]="formGroup" class="select-button-container">
+            <p-selectButton [options]="stateOptions" formControlName="value" (ngModelChange)="onSearchInputChange()"
+                optionLabel="label" optionValue="value"/>
+        </div>
+
+        <div *ngIf="searchType === 'user'">
+            <ng-container *ngIf="users.length > 0; else noUserResults">
+                <ul class="list-none p-0 m-0 flex flex-column gap-3">
+                    <li *ngFor="let user of users" class="flex align-items-center gap-2">
+                        <!-- Navigate to user profile when clicking on profile picture -->
+                        <p-avatar *ngIf="user.profilePicture" [image]="user.profilePicture" size="large" shape="circle"
+                            class="avatar cursor-pointer" (click)="navigateToUserProfile(user.username)"/>
+                        <p-avatar *ngIf="!user.profilePicture" icon="pi pi-user" size="large" shape="circle"
+                            class="avatar cursor-pointer" (click)="navigateToUserProfile(user.username)"/>
+                        <div>
+                            <!-- Navigate to user profile when clicking on username -->
+                            <span class="font-medium" (click)="navigateToUserProfile(user.username)" style="cursor: pointer;">
+                                {{ user.username }}
+                            </span>
+                        </div>
+                    </li>
+                </ul>
+            </ng-container>
+            <ng-template #noUserResults>
+                <div class="no-results">
+                    <span>No users found.</span>
+                </div>
+            </ng-template>
+        </div>
+        
+
+        <ng-container *ngIf="searchType === 'artwork'">
+            <ng-container *ngIf="artworks.length > 0; else noArtworkResults">
+                <div class="artwork-grid">
+                    <div class="artwork-item" *ngFor="let artwork of artworks">
+                        <p-card>
+                            <ng-template pTemplate="header">
+                                <div class="artwork-header">
+                                    <span class="username">&#64;<strong>{{ artwork.username }}</strong></span>
+                                    <span class="posted-date">{{ artwork.postedDate | date:'short' }}</span>
+                                </div>
+                            </ng-template>
+                            <ng-template pTemplate="content">
+                                <div class="artwork-image">
+                                    <p-image [src]="artwork.imageUrls[0]" [alt]="'Artwork by ' + artwork.username" 
+                                        [preview]="true" [imageStyle]="{
+                                            'max-width': '100%',
+                                            'max-height': '100%', 
+                                            'object-fit': 'cover'
+                                        }" >
+                                    </p-image>
+                                </div>
+                                <div class="artwork-labels">
+                                    <p-chip *ngFor="let label of artwork.labels" [label]="label"></p-chip>
+                                </div>
+                                <p class="artwork-description">{{ artwork.description | slice:0:50 }}</p>
+                            </ng-template>
+                            <ng-template pTemplate="footer">
+                                <div class="artwork-footer">
+                                    <span><i class="pi pi-heart"></i> {{ artwork.likeCount }}</span>
+                                    <span><i class="pi pi-comments"></i> {{ artwork.commentCount }}</span>
+                                </div>
+                            </ng-template>
+                        </p-card>
+                    </div>
+                </div>
+            </ng-container>
+            <ng-template #noArtworkResults>
+                <div class="no-results">
+                    <span>No artworks found.</span>
+                </div>
+            </ng-template>
+        </ng-container>
+    </div>
+</p-overlayPanel>

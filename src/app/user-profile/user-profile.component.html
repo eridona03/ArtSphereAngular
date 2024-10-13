@@ -1,0 +1,57 @@
+<app-menu></app-menu>
+<div class="surface-section px-4 py-5 md:px-6 lg:px-8">
+    <div class="flex align-items-start flex-column lg:justify-content-between lg:flex-row">
+        <div>
+            <div class="card flex justify-content-left">
+                <!-- Avatar based on profile picture existence -->
+                <p-avatar *ngIf="profilePictureUrl" [image]="profilePictureUrl" shape="circle" class="avatar" />
+                <p-avatar *ngIf="!profilePictureUrl" shape="circle" icon="pi pi-user" class="avatar" />
+
+                <!-- Username -->
+                <div class="font-medium text-3xl text-900 username">
+                    &#64;{{ profileHeader?.username }}
+                </div>
+            </div>
+
+            <!-- Circle Friends and Bio Section -->
+            <div class="flex align-items-center text-700 flex-wrap">
+                <div class="mr-5 flex align-items-center mt-3">
+                    <i class="pi pi-bullseye mr-2"></i>
+                    <span>
+                        {{ profileHeader?.numberOfCircleFriends === 1 ? '1 Circle Friend' : 
+                        (profileHeader?.numberOfCircleFriends || 0) + ' Circle Friends' }}
+                    </span>
+                </div>
+
+                <div class="flex align-items-center mt-3">
+                    <i class="pi pi-book mr-2"></i>
+                    <span>{{ profileHeader?.bio }}</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Friend Request, Remove Friend, and Pending Request Buttons -->
+        <div class="mt-3 lg:mt-0">
+            <!-- If not a friend and no pending request, show "Send Friend Request" button -->
+            <p-button *ngIf="!isFriend && !isRequestPending"
+                      pRipple label="Send Circle Request" class="p-button-outlined mr-2"
+                      icon="pi pi-plus-circle" severity="danger" (click)="sendRequest()"></p-button>
+
+            <!-- If already a friend, show "Remove Friend" button -->
+            <p-button *ngIf="isFriend"
+                      pRipple label="Remove from Circle" class="p-button-outlined mr-2"
+                      icon="pi pi-times" severity="secondary" [outlined]="true" (click)="removeFriend()"></p-button>
+
+            <!-- If pending friend request, show "Pending Request" button -->
+            <p-button *ngIf="!isFriend && isRequestPending"
+                      pRipple label="Pending Request" class="p-button-outlined mr-2"
+                      icon="pi pi-clock" severity="secondary"></p-button>
+        </div>
+    </div>
+</div>
+
+<!-- Artwork Component -->
+<app-artwork [userId]="userId"></app-artwork>
+
+
+

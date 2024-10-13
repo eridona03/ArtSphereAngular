@@ -1,0 +1,16 @@
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    overflow: auto;
+    background: linear-gradient(135deg, #f68ec1, #f7f0c4, #f3e7e7, #a6c1ee, #f68ec1);
+}
+
+
+
+.flex{
+    display: flex;
+    gap: 15px !important; 
+}

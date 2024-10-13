@@ -1,0 +1,73 @@
+<div class="container">
+    <div class="surface-card p-4 shadow-2 border-round w-full lg:w-6">
+        <div class="text-center mb-5">
+            <img src="logo.png" alt="Image" height="120" class="mb-3">
+            <div class="text-900 text-3xl font-medium mb-3">Welcome to ArtSphere!</div>
+            <span class="text-600 font-medium line-height-3">Already have an account?</span>
+            <a routerLink="" class="font-medium no-underline ml-2 text-blue-500 cursor-pointer">Log in here.</a>
+        </div>
+
+        <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+            <div>
+                <label for="username" class="block text-900 font-medium mb-2">Username</label>
+                <input id="username" type="text" placeholder="Enter Your Username" pInputText class="w-full mb-3"
+                    formControlName="username">
+
+                <label for="email1" class="block text-900 font-medium mb-2">Email</label>
+                <input id="email1" type="text" placeholder="Enter Your Email Address" pInputText class="w-full mb-3"
+                    formControlName="email">
+
+                <label for="password" class="block text-900 font-medium mb-2">Password</label>
+                <div class="card p-fluid" [style]="{ width: '100%' }">
+                    <p-password id="password" placeholder="Enter Your Password" inputStyleClass="w-full mb-3"
+                        formControlName="password">
+                        <ng-template pTemplate="header">
+                            <h6>Pick a password</h6>
+                        </ng-template>
+                        <ng-template pTemplate="footer">
+                            <p-divider></p-divider>
+                            <p class="mt-2">Suggestions</p>
+                            <ul class="pl-2 ml-2 mt-0" style="line-height: 1.5">
+                                <li>At least one lowercase</li>
+                                <li>At least one uppercase</li>
+                                <li>At least one numeric</li>
+                                <li>Minimum 8 characters</li>
+                            </ul>
+                        </ng-template>
+                    </p-password>
+                </div>
+
+                <label for="confirmpassword" class="block text-900 font-medium mb-2">Confirm Password</label>
+                <input id="confirmpassword" type="password" placeholder="Confirm Your Password" pInputText
+                    class="w-full mb-3" formControlName="confirmpassword">
+
+                <label for="birthdate" class="block text-900 font-medium mb-2">Birthdate</label>
+                <div class="card p-fluid" [style]="{ width: '100%', 'margin-bottom': '20px' }">
+                    <p-calendar id="birthdate" [showIcon]="true" [iconDisplay]="'input'" [showOnFocus]="false"
+                        placeholder="Enter Your Birthdate" formControlName="birthdate"></p-calendar>
+                </div>
+
+                <label for="gender" class="block text-900 font-medium mb-2">Gender</label>
+                <div class="flex flex-wrap gap-3" [style]="{ width: '100%', 'margin-bottom': '20px' }">
+                    <div class="flex align-items-center">
+                        <div *ngFor="let category of categories" class="radio-option">
+                            <p-radioButton [inputId]="category.key" [value]="category"
+                                formControlName="gender"></p-radioButton>
+                            <label [for]="category.key" class="ml-2">
+                                {{ category.name }}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <label for="country" class="block text-900 font-medium mb-2">Country</label>
+                <div class="card p-fluid" [style]="{ width: '100%', 'margin-bottom': '20px' }">
+                        <p-autoComplete formControlName="country" [suggestions]="filteredCountries"
+                            (completeMethod)="filterCountry($event)" field="name" inputStyleClass="w-full mb-3"/>
+                </div>
+
+                <button pButton pRipple label="Sign Up" icon="pi pi-user" class="w-full" type="submit"></button>
+            </div>
+        </form>
+    </div>
+</div>

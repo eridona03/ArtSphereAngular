@@ -1,0 +1,47 @@
+<div class="surface-section px-2 py-5 md:px-5 lg:px-6">
+    <div class="font-medium text-3xl text-900 mb-3">Notification Center</div>
+    <div class="notification-list">
+        <ng-container *ngFor="let notification of notifications; let last = last">
+            <div
+                [ngClass]="{'notification-item-unread': !notification.read, 'notification-item-read': notification.read}"
+                (click)="handleNotificationClick(notification.id)">
+                <div class="flex align-items-center justify-content-between">
+                    <div class="flex align-items-center">
+                        <!-- Display profile picture if available -->
+                        <p-avatar *ngIf="notification.profilePhotoUrl" [image]="notification.profilePhotoUrl"
+                            size="large" shape="circle" class="avatar mr-3">
+                        </p-avatar>
+
+                        <!-- Display default avatar if profile picture is not available -->
+                        <p-avatar *ngIf="!notification.profilePhotoUrl" size="large" shape="circle" icon="pi pi-user"
+                            class="avatar mr-3">
+                        </p-avatar>
+
+                        <!-- Notification content -->
+                        <div class="notification-content">
+                            <div class="notification-action">
+                                <strong>
+                                    <span class="notification-username">{{ notification.username }}</span>
+                                </strong>
+                                <ng-container *ngIf="notification.action === 'liked your post'; else commentTemplate">
+                                    <span class="text-700">{{ notification.action }}.</span>
+                                </ng-container>
+                                <ng-template #commentTemplate>
+                                    <span class="text-700">{{ notification.action }}: "{{ notification.content }}".</span>
+                                </ng-template>
+                            </div>
+                            
+                            <div class="notification-time text-sm">{{ notification.timeAgo }}</div>
+                        </div>
+                    </div>
+
+                    <!-- Post preview image -->
+                    <div class="post-preview">
+                        <img [src]="notification.postPreviewPhoto" alt="Post preview" />
+                    </div>
+                </div>
+            </div>
+            <!-- <p-divider *ngIf="!last"></p-divider> -->
+        </ng-container>
+    </div>
+</div>

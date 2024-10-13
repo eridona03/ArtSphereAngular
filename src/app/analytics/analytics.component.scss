@@ -1,0 +1,18 @@
+.charts-container {
+    display: flex;
+    justify-content: space-around; /* Adjust spacing between charts */
+    width: 100%; /* Make sure the container spans the full width */
+    gap: 2rem; /* Add a gap between the charts, adjust as needed */
+}
+
+.card {
+    flex: 1; /* Make sure each card takes equal space */
+    max-width: 25%; /* Adjust maximum width to control size of each chart */
+}
+
+p-chart {
+    width: 100% !important; /* Ensure charts take full width of their containers */
+}
+white-bg{
+    background-color: white !important;
+}
